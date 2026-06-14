@@ -8,9 +8,22 @@
 
 <h1>COSMIC PONG</h1>
 
-<canvas id="game" width="800" height="400"></canvas>
+<div id="menu">
+  <button onclick="startGame('ai')">Player vs AI</button>
+  <button onclick="startGame('multi')">2 Players</button>
+</div>
 
-<p>Player: <span id="pScore">0</span> | AI: <span id="aScore">0</span></p>
+<canvas id="game" width="900" height="500"></canvas>
+
+<h2 id="status">First to 10 Wins</h2>
+
+<p>
+Player 1:
+<span id="pScore">0</span>
+|
+Player 2:
+<span id="aScore">0</span>
+</p>
 
 <script src="script.js"></script>
 </body>
