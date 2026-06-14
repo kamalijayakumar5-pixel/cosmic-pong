@@ -1,105 +1,200 @@
 const canvas = document.getElementById("game")
 const ctx = canvas.getContext("2d")
 
-let playerY = 150
-let aiY = 150
+let gameMode = "ai"
 
-let ballX = 400
-let ballY = 200
-let ballDX = 4
-let ballDY = 3
+let playerY = 200
+let opponentY = 200
+
+let playerHeight = 80
+let opponentHeight = 80
+
+let ballX = 450
+let ballY = 250
+
+let ballDX = 5
+let ballDY = 4
 
 let pScore = 0
 let aScore = 0
 
-const pScoreText = document.getElementById("pScore")
-const aScoreText = document.getElementById("aScore")
+let gameStarted = false
 
-// mouse controls
-document.addEventListener("mousemove", (e) => {
-  const rect = canvas.getBoundingClientRect()
-  playerY = e.clientY - rect.top - 40
+const keys = {}
+
+document.addEventListener("keydown", e=>{
+  keys[e.key] = true
 })
 
-function drawRect(x, y, w, h, color) {
-  ctx.fillStyle = color
-  ctx.fillRect(x, y, w, h)
+document.addEventListener("keyup", e=>{
+  keys[e.key] = false
+})
+
+function startGame(mode){
+  gameMode = mode
+  document.getElementById("menu").style.display="none"
+  gameStarted = true
 }
 
-function drawBall(x, y) {
-  ctx.fillStyle = "white"
-  ctx.beginPath()
-  ctx.arc(x, y, 8, 0, Math.PI * 2)
-  ctx.fill()
+function resetBall(){
+  ballX = 450
+  ballY = 250
+  ballDX *= -1
 }
 
-function resetBall() {
-  ballX = 400
-  ballY = 200
-  ballDX = -ballDX
+function spawnPowerup(){
+
+  const random = Math.floor(Math.random()*2)
+
+  if(random===0){
+    playerHeight = 130
+
+    setTimeout(()=>{
+      playerHeight = 80
+    },5000)
+  }
+
+  if(random===1){
+    ballDX *= 1.3
+    ballDY *= 1.3
+  }
 }
 
-function update() {
+setInterval(()=>{
+  if(gameStarted){
+    spawnPowerup()
+  }
+},15000)
 
-  // ball movement
+function update(){
+
+  if(!gameStarted) return
+
+  if(keys["w"]) playerY -= 7
+  if(keys["s"]) playerY += 7
+
+  if(gameMode==="multi"){
+    if(keys["ArrowUp"]) opponentY -= 7
+    if(keys["ArrowDown"]) opponentY += 7
+  }
+  else{
+    opponentY += (ballY - opponentY - 40) * 0.08
+  }
+
   ballX += ballDX
   ballY += ballDY
 
-  // top/bottom bounce
-  if (ballY <= 0 || ballY >= 400) {
+  if(ballY <= 0 || ballY >= canvas.height){
     ballDY *= -1
   }
 
-  // player paddle collision
-  if (
-    ballX <= 20 &&
+  if(
+    ballX <= 25 &&
     ballY > playerY &&
-    ballY < playerY + 80
-  ) {
+    ballY < playerY + playerHeight
+  ){
     ballDX *= -1
   }
 
-  // AI paddle collision
-  if (
-    ballX >= 780 &&
-    ballY > aiY &&
-    ballY < aiY + 80
-  ) {
+  if(
+    ballX >= 875 &&
+    ballY > opponentY &&
+    ballY < opponentY + opponentHeight
+  ){
     ballDX *= -1
   }
 
-  // scoring
-  if (ballX < 0) {
+  if(ballX < 0){
     aScore++
-    aScoreText.textContent = aScore
+    updateScore()
     resetBall()
   }
 
-  if (ballX > 800) {
+  if(ballX > canvas.width){
     pScore++
-    pScoreText.textContent = pScore
+    updateScore()
     resetBall()
   }
 
-  // AI movement (simple tracking)
-  aiY += (ballY - aiY - 40) * 0.05
+  checkWin()
 }
 
-function draw() {
-  ctx.clearRect(0, 0, 800, 400)
-
-  // paddles
-  drawRect(10, playerY, 10, 80, "white")
-  drawRect(780, aiY, 10, 80, "white")
-
-  // ball
-  drawBall(ballX, ballY)
+function updateScore(){
+  document.getElementById("pScore").textContent = pScore
+  document.getElementById("aScore").textContent = aScore
 }
 
-function loop() {
+function checkWin(){
+
+  if(pScore >= 10){
+    document.getElementById("status").textContent =
+      "PLAYER 1 WINS THE GALAXY!"
+    gameStarted = false
+  }
+
+  if(aScore >= 10){
+    document.getElementById("status").textContent =
+      gameMode==="multi"
+      ? "PLAYER 2 WINS THE GALAXY!"
+      : "AI WINS THE GALAXY!"
+    gameStarted = false
+  }
+}
+
+const stars = []
+
+for(let i=0;i<100;i++){
+  stars.push({
+    x:Math.random()*900,
+    y:Math.random()*500,
+    size:Math.random()*3
+  })
+}
+
+function drawStars(){
+
+  for(const star of stars){
+
+    ctx.fillStyle="white"
+
+    ctx.fillRect(
+      star.x,
+      star.y,
+      star.size,
+      star.size
+    )
+  }
+}
+
+function draw(){
+
+  ctx.clearRect(0,0,900,500)
+
+  drawStars()
+
+  ctx.fillStyle="cyan"
+  ctx.fillRect(10,playerY,12,playerHeight)
+
+  ctx.fillStyle="magenta"
+  ctx.fillRect(
+    878,
+    opponentY,
+    12,
+    opponentHeight
+  )
+
+  ctx.beginPath()
+  ctx.fillStyle="white"
+  ctx.arc(ballX,ballY,8,0,Math.PI*2)
+  ctx.fill()
+}
+
+function gameLoop(){
+
   update()
   draw()
-  requestAnimationFrame(loop)
+
+  requestAnimationFrame(gameLoop)
 }
 
-loop()
+gameLoop()
