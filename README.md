@@ -1,35 +1,104 @@
 # Cosmic Pong
 
-## Overview
+## About the Project
 
-Cosmic Pong is a simple arcade-style table tennis game inspired by the classic game Pong. The player controls a paddle on the left side of the screen and competes against an AI-controlled paddle on the right. The goal is to keep the ball in play, score points by getting the ball past the opponent, and achieve the highest score possible.
+Cosmic Pong is a browser-based game inspired by the classic arcade game Pong. The aim of the game is to hit the ball past your opponent to score points. Players can either play against an AI opponent or against another player using the same keyboard.
 
-This project was created using HTML, CSS, and JavaScript and was developed as a way to explore game development concepts such as animation, collision detection, score tracking, and artificial intelligence. Although the gameplay is simple, creating the game required combining multiple programming concepts to produce a smooth and interactive experience.
+I made this project to learn more about JavaScript and game development. Through creating the game, I learnt how collision detection, game loops, user input and score systems work.
 
 ---
 
-## Purpose
+## Acknowledgements
 
-The main purpose of this project was to develop a playable browser game while gaining experience with JavaScript programming and game development techniques. Through creating Cosmic Pong, I was able to practise designing a user interface, implementing game mechanics, debugging code, and improving the overall user experience.
+This project started as a tutorial project while I was learning how to make games using HTML, CSS and JavaScript.
 
-The project also provided an opportunity to learn how real-time games function by continuously updating the game state and rendering graphics to the screen.
+After completing the tutorial, I made a number of changes to make the game my own. These changes included redesigning the appearance of the game, adding a two-player mode, creating a start menu, introducing power-ups, and adding a win condition.
+
+The final version is not intended to be an exact copy of the tutorial and includes several features that were developed independently.
 
 ---
 
 ## Features
 
-### Player Controls
-- The player controls a paddle on the left side of the screen.
-- Paddle movement follows the mouse position, allowing quick and responsive gameplay.
+### Space Theme
+The game uses a space-themed design with a starry background and glowing colours to match the name "Cosmic Pong".
 
-### AI Opponent
-- An AI-controlled paddle tracks the movement of the ball.
-- The AI automatically attempts to return the ball whenever it approaches.
+### Single Player Mode
+Players can compete against an AI opponent which follows the movement of the ball.
 
-### Ball Physics
-- The ball moves continuously across the screen.
-- The ball bounces off the top and bottom walls.
-- The ball changes direction when it collides with either paddle.
+### Two Player Mode
+The game also includes a local multiplayer mode.
 
-### Scoring System
-- Players
+Controls:
+
+**Player 1**
+- W = Move up
+- S = Move down
+
+**Player 2**
+- Up Arrow = Move up
+- Down Arrow = Move down
+
+### Power-Ups
+Random power-ups can appear during the game. These can change the size of paddles or affect the speed of the ball.
+
+### First to 10 Wins
+Instead of continuing forever, matches end when one player reaches 10 points.
+
+### Score Tracking
+The score is displayed throughout the game and updates whenever a player scores.
+
+---
+
+## Technologies Used
+
+- HTML
+- CSS
+- JavaScript
+- HTML Canvas
+
+---
+
+## How to Play
+
+1. Open the game in a web browser.
+2. Choose either single-player or two-player mode.
+3. Use the controls to move your paddle.
+4. Try to stop the ball from passing your side.
+5. Score points by getting the ball past your opponent.
+6. Reach 10 points before your opponent to win.
+
+---
+
+## What I Learnt
+
+While making this project, I learnt about:
+
+- Using the HTML canvas
+- Handling keyboard and mouse input
+- Collision detection
+- JavaScript functions and variables
+- Creating game loops
+- Debugging code
+- Improving a project beyond its original tutorial version
+
+---
+
+## Future Improvements
+
+If I continue working on the project, I would like to add:
+
+- More power-ups
+- Sound effects and music
+- Difficulty settings
+- Better visual effects
+- Additional game modes
+- Online multiplayer
+
+---
+
+## Author
+
+Kamali
+
+2026
